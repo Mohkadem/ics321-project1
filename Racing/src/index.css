@@ -1,8 +1,42 @@
+@import "tailwindcss";
 body {
   background-color: black;
   color: white;
+  font-family: "SUSE Mono", monospace;
 }
-.wrapper {
+li {
+  list-style: none;
+}
+button {
+  margin-right: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 18px;
+}
+.nav-link {
+  @apply mr-2;
+}
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* The 32px is the height of the header itself & the 16px is the margin-top the header has */
+  height: calc(100vh - (32px + 16px));
+}
+.login {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+input {
+  border: 1px solid white;
+  border-radius: 4px;
+  margin: 10px 0;
+  width: 90%;
+}
+button {
+  width: 90%;
+  background-color: black;
+  border-radius: 4px;
 }
