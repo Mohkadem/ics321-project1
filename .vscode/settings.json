@@ -32,5 +32,22 @@
   // --- UI ---
   "editor.minimap.enabled": false,
   "workbench.colorTheme": "Default Dark Modern",
-  "files.autoSave": "onFocusChange"
+  "files.autoSave": "onFocusChange",
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default",
+        "enableSsl": "Disabled"
+      },
+      "ssh": "Disabled",
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3306,
+      "driver": "MySQL",
+      "name": "Project",
+      "database": "Racing",
+      "username": "root",
+      "password": "Mohammed32"
+    }
+  ]
 }

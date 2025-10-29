@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS horse_racing;
+DROP DATABASE horse_racing;
 CREATE DATABASE IF NOT EXISTS horse_racing;
 USE horse_racing;
 
@@ -300,7 +300,7 @@ insert into RaceResults values('race36', 'horse15', 'second', 80000);
 insert into RaceResults values('race36', 'horse20', 'third', 50000);
 
 DROP PROCEDURE IF EXISTS AddRace;
-
+DELIMITER $$
 
 CREATE PROCEDURE AddRace(
 p_raceId VARCHAR(15),
@@ -325,30 +325,33 @@ BEGIN
     INSERT INTO RaceResults (raceId, horseId, results, prize)
     VALUES (p_raceId, p_horse1, p_result1, p_prize1),
            (p_raceId, p_horse2, p_result2, p_prize2);
-END  
+END $$
 
+DELIMITER ;
 
 
 
 DROP PROCEDURE IF EXISTS DeleteOwner;
-
+DELIMITER $$
 CREATE PROCEDURE DeleteOwner(p_ownerID varchar(15))
 BEGIN
 	DELETE FROM owns WHERE ownerId = p_ownerID;
 	DELETE FROM Owner WHERE ownerId = p_ownerID;
 END $$
 
+DELIMITER ;
 
 
 DROP PROCEDURE IF EXISTS MoveHorse;
-
+DELIMITER $$
 CREATE PROCEDURE MoveHorse(p_horseId VARCHAR(15), p_NewStable VARCHAR(30))
 BEGIN
 	UPDATE horse set StableId = p_NewStable
 	WHERE horseId = p_horseId;
 END $$
 
+DELIMITER ;
 
-SELECT * from Race
+
 
 
