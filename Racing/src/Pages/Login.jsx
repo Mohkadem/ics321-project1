@@ -1,18 +1,20 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 const Login = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const validUsername = "admin";
-  const validPassword = "admin";
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const validUsername = 'admin';
+  const validPassword = 'admin';
+  // const toggle =
   const handleSubmit = (e) => {
     e.preventDefault();
     if (username === validUsername && password === validPassword) {
-      navigate("/admin");
+      navigate('/admin');
     } else {
-      setError("Invalid username or password");
+      setError('Invalid username or password');
     }
   };
   return (
@@ -33,7 +35,7 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          {error && <p className="text-red-500 my-2">{error}</p>}
+          {error && <p className="text-red-500">{error}</p>}
           <button type="submit" onClick={handleSubmit}>
             Login
           </button>
