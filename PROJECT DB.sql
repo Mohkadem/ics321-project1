@@ -65,7 +65,17 @@ create table RaceResults
     foreign key(raceId) references Race(raceId), 
     foreign key(horseId) references Horse(horseId)); 
  
- 
+ ## table for trigger function
+ create table old_info(
+	horseId  varchar(15) not null, 
+    horseName  varchar(15) not null, 
+    age  int,  
+    gender char, 
+    registration  integer not null, 
+    stableId varchar(30) not null
+    );
+    
+    
  
 /* Add data to tables. */ 
 /* Stables first */ 
@@ -299,6 +309,9 @@ insert into RaceResults values('race36', 'horse11', 'first', 100000);
 insert into RaceResults values('race36', 'horse15', 'second', 80000); 
 insert into RaceResults values('race36', 'horse20', 'third', 50000);
 
+
+## Admin Functions:
+
 DROP PROCEDURE IF EXISTS AddRace;
 DELIMITER $$
 
@@ -319,10 +332,10 @@ p_result3 VARCHAR(15),
 p_prize3 FLOAT
 )
 BEGIN
-    INSERT INTO Race (raceId, raceName, trackName, raceDate, raceTime)
+    INSERT INTO Race(raceId, raceName, trackName, raceDate, raceTime)
     VALUES (p_raceId, p_raceName, p_trackName, p_raceDate, p_raceTime);
 
-    INSERT INTO RaceResults (raceId, horseId, results, prize)
+    INSERT INTO RaceResults(raceId, horseId, results, prize)
     VALUES (p_raceId, p_horse1, p_result1, p_prize1),
            (p_raceId, p_horse2, p_result2, p_prize2);
 END $$
@@ -352,6 +365,96 @@ END $$
 
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS ApproveTrainer;
+DELIMITER $$
 
+CREATE PROCEDURE ApproveTrainer(
+p_trainerId VARCHAR(15),
+p_lname VARCHAR(30),
+p_fname VARCHAR(30),
+p_stableId VARCHAR(30))
+BEGIN
+	INSERT INTO Trainer(trainerId, lname, fname, stableId)
+    VALUES (p_trainerId, p_lname, p_fname, p_stableId);
+END $$
+
+DELIMITER ;
+
+## Guest Functions:
+
+DROP PROCEDURE IF EXISTS BrowseHorse;
+DELIMITER $$
+
+CREATE PROCEDURE BrowseHorse(p_lname VARCHAR(15))
+BEGIN
+	SELECT H.horseName, H.age, CONCAT(t.fname, ' ', t.lname) AS Trainer_Name
+    FROM Owner O JOIN Owns W ON O.ownerId = W.ownerId
+    JOIN Horse H on W.horseId = H.horseId
+    JOIN Trainer T on H.stableId = T.stableId
+    WHERE O.lname = p_lname;
+END $$
+    
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS BrowseTrainer;
+DELIMITER $$
+
+CREATE PROCEDURE BrowseTrainer()
+BEGIN
+	SELECT CONCAT(t.fname, ' ', t.lname) AS Trainer_Name, H.horseName, R.raceName
+    FROM Horse H JOIN RaceResults RR ON H.horseId = RR.horseId
+    JOIN Race R on RR.raceId = R.raceId
+    JOIN Trainer T on T.stableId = H.stableId
+    Where RR.results = "first";
+END $$
+
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS winTrainers;
+DELIMITER $$
+
+CREATE PROCEDURE winTrainers()
+BEGIN
+	SELECT CONCAT(t.fname, ' ', t.lname) AS Trainer_Name, SUM(RR.prize) AS totalWinnings
+    FROM Horse H JOIN RaceResults RR ON H.horseId = RR.horseId
+    JOIN Trainer T ON T.stableId = H.stableId
+    GROUP BY Trainer_Name
+    ORDER BY totalWinnings DESC;
+END $$
+
+DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS track_info;
+DELIMITER $$
+
+CREATE PROCEDURE track_info()
+BEGIN
+	SELECT T.trackName, COUNT(DISTINCT R.raceId), COUNT(DISTINCT RR.horseId)
+    FROM Track T JOIN Race R ON T.trackName = R.trackName
+    JOIN RaceResults RR on RR.raceId = R.raceId
+    GROUP BY T.trackName;
+END $$
+
+DELIMITER ;
+
+
+## trigger function
+
+DROP TRIGGER IF EXISTS deleteHorse
+
+DELIMITER $$
+
+CREATE TRIGGER deleteHorse
+BEFORE DELETE ON Horse
+FOR EACH ROW
+BEGIN
+    INSERT INTO old_info 
+    (horseId, horseName, age, gender, registration, stableId)
+    VALUES 
+    (OLD.horseId, OLD.horseName, OLD.age, OLD.gender, OLD.registration, OLD.stableId);
+END $$
+
+DELIMITER ;
 
 

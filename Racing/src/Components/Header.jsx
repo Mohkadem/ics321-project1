@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import { headerLinks } from '../../Constants/index';
 const Header = () => {
   return (
     <>
@@ -6,7 +7,12 @@ const Header = () => {
         <div className="container w-[90%] flex justify-between items-center mx-auto">
           <h1 className="text-2xl font-bold">Racing</h1>
           <div>
-            <NavLink to="/" end className="nav-link">
+            {headerLinks.map((e) => (
+              <NavLink key={e.id} to={e.to} end className="nav-link">
+                {e.title}
+              </NavLink>
+            ))}
+            {/* <NavLink to="/" end className="nav-link">
               Home
             </NavLink>
             <NavLink to="/login" end className="nav-link">
@@ -14,7 +20,7 @@ const Header = () => {
             </NavLink>
             <NavLink to="/signUp" className="nav-link">
               Sign Up
-            </NavLink>
+            </NavLink> */}
           </div>
         </div>
       </div>

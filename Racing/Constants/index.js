@@ -1,19 +1,22 @@
 export const headerLinks = [
   {
-    id: "hero",
-    title: "Home",
+    id: 'home',
+    title: 'Home',
+    to: '/',
   },
-
+  // {
+  //   id: 'searchHorse',
+  //   title: 'Search',
+  //   to: '/searchHorse',
+  // },
   {
-    id: "work",
-    title: "Work",
+    id: 'login',
+    title: 'Login',
+    to: '/login',
   },
   {
-    id: "steps",
-    title: "Steps",
-  },
-  {
-    id: "contact",
-    title: "Contact",
+    id: 'signUp',
+    title: 'Sign Up',
+    to: '/signUp',
   },
 ];

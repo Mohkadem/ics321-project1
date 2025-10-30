@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import horseImg from '../assets/horse.png';
+import BrowseHorse from './BrowseHorse';
 const Home = () => {
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -22,20 +24,23 @@ const Home = () => {
   }, []);
   if (loading) return <div>Loading weather...</div>;
   if (!weather || weather.cod !== 200) return <div>Failed to load weather data 😞</div>;
-  const date = new Date('2020-01-01');
   return (
-    <section>
-      <div className="flex flex-col md:flex-row gap-2 justify-center mt-6 mx-auto ">
-        <h1>🌤 Weather in {weather.name} </h1>
-        <h2>{weather.main.temp}°C </h2>
-        <p>{weather.weather[0].description}</p>
-        <p>💨 Wind: {weather.wind.speed} m/s </p>
-        <p>💧 Humidity: {weather.main.humidity}%</p>
-      </div>
-      <div>
-        <img src="../assets/horse.png" alt="horse" className="w-32 h-32" />
-      </div>
-    </section>
+    <>
+      <section className=" h-screen">
+        <div className="flex flex-col md:flex-row gap-2 justify-center mt-6 mx-auto ">
+          <h1>🌤 Weather in {weather.name} </h1>
+          <h2>{weather.main.temp}°C </h2>
+          <p>{weather.weather[0].description}</p>
+          <p>💨 Wind: {weather.wind.speed} m/s </p>
+          <p>💧 Humidity: {weather.main.humidity}%</p>
+        </div>
+        <div>
+          <img src={horseImg} alt="horse" className="w-[400px] h-[400px]" />
+        </div>
+      </section>
+      {/* <Hero /> */}
+      <BrowseHorse />
+    </>
   );
 };
 

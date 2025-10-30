@@ -9,9 +9,13 @@ const ManageTrainers = () => {
     e.preventDefault();
 
     try {
+      // The fetch just means that we are sending request to the server (python file which is the backend)
+      // The purpose of await is just to tell the method stop until we get the result and store it in response
       const response = await fetch('http://127.0.0.1:5001/admin/manageTrainers', {
         method: 'POST',
+        // Telling the server that the file will be sent is in json format
         headers: { 'Content-Type': 'application/json' },
+        //
         body: JSON.stringify({ trainerId, lName, fName, stable }),
       });
       const result = await response.json();

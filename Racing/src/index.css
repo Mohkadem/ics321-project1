@@ -53,3 +53,6 @@ button {
 button[type='submit'] {
   @apply bg-gray-800 text-white py-2 rounded hover:bg-gray-900 transition;
 }
+.card {
+  @apply hover:bg-gray-600 transition;
+}
