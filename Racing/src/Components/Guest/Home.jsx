@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
-import horseImg from '../assets/horse.png';
+import horseImg from '../../../src/assets/horse.png';
 import BrowseHorse from './BrowseHorse';
+import WiningTrainers from './WiningTrainers';
+import ViewTracks from './ViewTracks';
 const Home = () => {
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -40,6 +42,8 @@ const Home = () => {
       </section>
       {/* <Hero /> */}
       <BrowseHorse />
+      <WiningTrainers />
+      <ViewTracks />
     </>
   );
 };

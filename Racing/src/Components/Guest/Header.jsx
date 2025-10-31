@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { headerLinks } from '../../Constants/index';
+import { headerLinks } from '../../../Constants/index';
 const Header = () => {
   return (
     <>
