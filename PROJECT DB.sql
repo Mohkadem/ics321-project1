@@ -1,6 +1,6 @@
-DROP DATABASE horse_racing;
-CREATE DATABASE IF NOT EXISTS horse_racing;
-USE horse_racing;
+DROP DATABASE IF EXISTS Racing;
+CREATE DATABASE IF NOT EXISTS Racing;
+USE Racing;
 
 CREATE TABLE Stable (
     stableId varchar(15) not null,
@@ -315,29 +315,36 @@ insert into RaceResults values('race36', 'horse20', 'third', 50000);
 DROP PROCEDURE IF EXISTS AddRace;
 DELIMITER $$
 
+DROP PROCEDURE IF EXISTS AddRace;
+DELIMITER $$
+
 CREATE PROCEDURE AddRace(
-p_raceId VARCHAR(15),
-p_raceName VARCHAR(30),
-p_trackName VARCHAR(30),
-p_raceDate DATE,
-p_raceTime TIME,
-p_horse1 VARCHAR(15),
-p_result1 VARCHAR(15),
-p_prize1 FLOAT,
-p_horse2 VARCHAR(15),
-p_result2 VARCHAR(15),
-p_prize2 FLOAT,
-p_horse3 VARCHAR(15),
-p_result3 VARCHAR(15),
-p_prize3 FLOAT
+    p_raceId VARCHAR(15),
+    p_raceName VARCHAR(30),
+    p_trackName VARCHAR(30),
+    p_raceDate DATE,
+    p_raceTime TIME,
+    p_horse1 VARCHAR(15),
+    p_result1 VARCHAR(15),
+    p_prize1 FLOAT,
+    p_horse2 VARCHAR(15),
+    p_result2 VARCHAR(15),
+    p_prize2 FLOAT,
+    p_horse3 VARCHAR(15),
+    p_result3 VARCHAR(15),
+    p_prize3 FLOAT
 )
 BEGIN
+    -- Insert the race itself
     INSERT INTO Race(raceId, raceName, trackName, raceDate, raceTime)
     VALUES (p_raceId, p_raceName, p_trackName, p_raceDate, p_raceTime);
 
+    -- Insert results for all horses
     INSERT INTO RaceResults(raceId, horseId, results, prize)
-    VALUES (p_raceId, p_horse1, p_result1, p_prize1),
-           (p_raceId, p_horse2, p_result2, p_prize2);
+    VALUES 
+        (p_raceId, p_horse1, p_result1, p_prize1),
+        (p_raceId, p_horse2, p_result2, p_prize2),
+        (p_raceId, p_horse3, p_result3, p_prize3);
 END $$
 
 DELIMITER ;
